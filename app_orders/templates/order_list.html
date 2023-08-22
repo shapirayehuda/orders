@@ -1,0 +1,71 @@
+<!-- order_list.html -->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order List</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .order-list {
+            display: flex;
+            justify-content: center;
+            align-text: center;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 60%;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="{% url 'index' %}">Create More Orders</a>
+    <div class="order-list">
+        <h2>Order List</h2>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Orderer Name</th>
+                <th>Phone Number</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Products</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+              
+                <tr>
+                    <td>{{ order.orderer.orderer_name }}</td>
+                    <td>{{ order.orderer.phone_number }}</td>
+                    <td>{{ order.start_date }}</td>
+                    <td>{{ order.end_date }}</td>
+                    <td>
+                        {% for product_name, quantity in order.products_with_quantities.items %}
+                            {% if quantity > 0 %}
+                                {{ product_name }}: {{ quantity }} <br>
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+             
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+
+</html>

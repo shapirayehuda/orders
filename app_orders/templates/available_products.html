@@ -1,0 +1,76 @@
+{% load custom_filters %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Available Products</title>
+    <style>
+        body {
+            
+            justify-content: center;
+            align-items: up;
+            align-text: center;
+        }
+
+        form {
+            
+            text-align: left;
+        }
+
+        table {
+            display: center;
+            border-collapse: collapse;
+            width: 40%;
+            margin-bottom: 20px;
+            margin: center;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <a href="{% url 'order_list' %}">Orders</a><br>
+    <a href="{% url 'new_order' %}">Create More Orders</a><br><br>
+
+    <h1>Available Products</h1>
+
+    <form method="get">
+        <label for="selected_date">Select a date:</label>
+        <input type="date" name="selected_date" id="selected_date" value="{% if selected_date %}{{ selected_date.isoformat }}{% endif %}">
+        <input type="submit" value="Get Available Products">
+    </form>
+
+    {% if selected_date %}
+        <h2>Available Products on {{ selected_date }}</h2>
+        {% with available_products=available_products_by_date|get_item:selected_date %}
+            {% if available_products %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for product in available_products %}
+                            <tr>
+                                <td>{{ product.Product_name }}</td>
+                                <td>{{ product.quantity }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>No available products on this date.</p>
+            {% endif %}
+        {% endwith %}
+    {% endif %}
+
+</body>
+</html>

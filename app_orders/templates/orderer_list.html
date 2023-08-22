@@ -1,0 +1,18 @@
+<!-- orderer_list.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Orderer List</title>
+</head>
+<body>
+    <h1>Orderer List</h1>
+    <ul>
+    {% for orderer in orderer_list %}
+        <li>{{ orderer.orderer_name }} - {{ orderer.phone_number }}</li>
+    {% empty %}
+        <li>No orderers found.</li>
+    {% endfor %}
+    </ul>
+</body>
+</html>
